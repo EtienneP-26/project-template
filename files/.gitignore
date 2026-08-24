@@ -1,0 +1,47 @@
+### Secrets ###
+.env*
+!.env.example
+
+### Binaire du projet ###
+_PROJECT_BINARY_NAME_
+
+### C / C++ ###
+*.o
+*.a
+*.so
+*.out
+a.out
+core
+vgcore.*
+*.gcda
+*.gcno
+
+### Rust ###
+/target/
+
+### Python ###
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+
+### JS / TS / Node ###
+node_modules/
+dist/
+build/
+npm-debug.log*
+
+### Rapports générés ###
+reports/
+
+### Éditeurs / OS ###
+.vscode/
+
+### Logs ###
+*.log
+
+### Documents générés ###
+*.pdf
