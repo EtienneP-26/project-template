@@ -1,0 +1,32 @@
+#!/bin/bash
+# Pre-commit hook : bloque les fichiers .env et les secrets avant chaque commit
+
+set -e
+
+echo "Vérification Pre-commit..."
+
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+for file in $STAGED_FILES; do
+    if [[ "$file" =~ (^|/)\.env($|\.[^.]+$) ]] && [[ "$file" != *".env.example" ]]; then
+        echo "❌ Fichier interdit détecté : $file"
+        echo "   Les fichiers .env ne doivent jamais être commit (vérifie ton .gitignore)."
+        exit 1
+    fi
+done
+
+SECRET_PATTERNS='(api[_-]?key|secret[_-]?key|access[_-]?token|password|passwd|AKIA[0-9A-Z]{16}|-----BEGIN (RSA|OPENSSH|PRIVATE) KEY-----)'
+
+if [ -n "$STAGED_FILES" ]; then
+    MATCHES=$(git diff --cached -U0 -- $STAGED_FILES \
+        | grep -E '^\+' \
+        | grep -vE '^\+\+\+' \
+        | grep -inE "$SECRET_PATTERNS" || true)
+    if [ -n "$MATCHES" ]; then
+        echo "❌ Secret potentiel détecté dans le diff :"
+        echo "$MATCHES"
+        exit 1
+    fi
+fi
+
+echo "Pre-commit OK"

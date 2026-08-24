@@ -1,0 +1,16 @@
+#!/bin/bash
+# commit-msg hook : vérifie que le message respecte la convention.
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(head -n1 "$COMMIT_MSG_FILE")
+
+PATTERN="^(feat|fix|docs|style|refactor|test|ci)(\(.+\))?: .+"
+
+if ! [[ "$COMMIT_MSG" =~ $PATTERN ]]; then
+    echo "❌ Message de commit invalide : \"$COMMIT_MSG\""
+    echo "   Format attendu : <type>: <description>"
+    echo "   Voir le CONTRIBUTING.md"
+    exit 1
+fi
+
+exit 0
