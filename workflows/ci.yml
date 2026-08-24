@@ -1,0 +1,58 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & tests (C/C++)
+        if: hashFiles('Makefile') != ''
+        run: |
+          make
+          make tests_run
+
+      - name: Build & tests (Python)
+        if: hashFiles('requirements.txt', 'pyproject.toml') != ''
+        run: |
+          pip install -r requirements.txt 2>/dev/null || pip install -e .
+          pip install pytest
+          pytest -q
+
+      - name: Build & tests (JS/TS)
+        if: hashFiles('package.json') != ''
+        run: |
+          npm ci
+          npm test
+
+      - name: Build & tests (Rust)
+        if: hashFiles('Cargo.toml') != ''
+        run: |
+          command -v cargo >/dev/null || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source "$HOME/.cargo/env" 2>/dev/null || true
+          cargo build --verbose
+          cargo test --verbos
+
+      - name: Rien à tester pour l'instant
+        if: hashFiles('Makefile', 'requirements.txt', 'pyproject.toml', 'package.json') == ''
+        run: echo "Aucune stack détecté (pas encore de Makefile/requirements.txt/package.json). CI inactive en attendant du code."
+
+  norm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Epitech coding style
+        run: |
+          mkdir -p reports
+          docker run --rm -v "$PWD":/mnt/delivery -v "$PWD/reports":/mnt/reports \
+            ghcr.io/epitech/coding-style-checker:latest /mnt/delivery /mnt/reports
+      - name: Fail if norm errors found
+        run: |
+          if [ -s reports/coding-style-reports.log ]; then
+            cat reports/coding-style-reports.log
+            exit 1
+          fi
