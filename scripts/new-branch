@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+
+TYPES="feat fix docs style refactor test ci"
+
+TYPE="$1"
+DESC="$2"
+
+if [ -z "$TYPE" ] || [ -z "$DESC" ]; then
+    echo "Usage : ./scripts/new-branch <type> <description-courte-en-kebab-case>"
+    echo "Types valides : $TYPES"
+    echo "Exemple : ./scripts/new-branch feat parsing-config-file"
+    exit 1
+fi
+
+if ! echo "$TYPES" | grep -qw "$TYPE"; then
+    echo "Type invalide : \"$TYPE\""
+    echo "Types valides : $TYPES"
+    exit 1
+fi
+
+if ! [[ "$DESC" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+    echo "Description invalide : \"$DESC\""
+    echo "Format attendu : kebab-case (minuscules, chiffres, tirets uniquement)"
+    exit 1
+fi
+
+BRANCH="$TYPE/$DESC"
+
+git checkout main
+git pull
+git checkout -b "$BRANCH"
+
+echo "Branche créée et à jour sur main : $BRANCH"
