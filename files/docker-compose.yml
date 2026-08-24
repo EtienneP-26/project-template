@@ -1,0 +1,9 @@
+services:
+  env:
+    image: epitechcontent/epitest-docker:latest
+    volumes:
+      - .:/mnt/delivery
+    working_dir: /mnt/delivery
+    stdin_open: true
+    tty: true
+    command: bash
