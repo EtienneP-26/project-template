@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+mkdir -p .git/hooks
+
+cat > .git/hooks/commit-msg << 'HOOKEOF'
+<commitmsg>
+HOOKEOF
+
+cat > .git/hooks/pre-commit << 'HOOKEOF'
+<precommit>
+HOOKEOF
+
+chmod +x .git/hooks/commit-msg .git/hooks/pre-commit
+
+echo "Hooks installés : commit-msg pre-commit"
