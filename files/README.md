@@ -53,6 +53,7 @@ Ou
 ├── tests/                      # Tests fonctionnels/unitaires
 ├── docs/                       # Documentation complémentaire
 ├── scripts/                    # Scripts
+│   └── new-branch              # Script to create new git branches
 │
 ├── .gitignore                  # Fichiers à ne pas Commit
 ├── docker-compose.yml          # Environnement de test Docker (Epitech)
