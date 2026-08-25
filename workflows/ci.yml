@@ -35,11 +35,11 @@ jobs:
           command -v cargo >/dev/null || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
           source "$HOME/.cargo/env" 2>/dev/null || true
           cargo build --verbose
-          cargo test --verbos
+          cargo test --verbose
 
       - name: Rien à tester pour l'instant
-        if: hashFiles('Makefile', 'requirements.txt', 'pyproject.toml', 'package.json') == ''
-        run: echo "Aucune stack détecté (pas encore de Makefile/requirements.txt/package.json). CI inactive en attendant du code."
+        if: hashFiles('Makefile', 'requirements.txt', 'pyproject.toml', 'package.json', 'Cargo.toml') == ''
+        run: echo "Aucune stack détectée (pas encore de Makefile/requirements.txt/package.json/Cargo.toml). CI inactive en attendant du code."
 
   norm:
     runs-on: ubuntu-latest
