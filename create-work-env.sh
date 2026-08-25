@@ -14,20 +14,21 @@ touch src/main
 touch tests/test_file
 echo "https://www.markdownlang.com/advanced/best-practices.html" > docs/index.md
 
-TEMPLATE="hooks/add-git-hooks.template"
+TEMPLATE="$PTF/hooks/add-git-hooks.template"
 OUTPUT="scripts/add-git-hooks"
 mkdir -p scripts
 > "$OUTPUT"
 while IFS= read -r line || [ -n "$line" ]; do
     case "$line" in
-        "<commitmsg>") cat hooks/commit-msg >> "$OUTPUT" ;;
-        "<precommit>") cat hooks/pre-commit >> "$OUTPUT" ;;
+        "<commitmsg>") cat "$PTF/hooks/commit-msg" >> "$OUTPUT" ;;
+        "<precommit>") cat "$PTF/hooks/pre-commit" >> "$OUTPUT" ;;
         *) echo "$line" >> "$OUTPUT" ;;
     esac
 done < "$TEMPLATE"
 chmod +x "$OUTPUT"
 
 cp -p $PTF/scripts/* scripts/.
+chmod +x scripts/*
 
 cp $PTF/files/.gitignore .gitignore
 cp $PTF/files/docker-compose.yml docker-compose.yml
