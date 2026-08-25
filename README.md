@@ -18,14 +18,14 @@ Le but est d'avoir rapidement un repo pret à être utilisé et avoir une archit
 ## Installation
 Dans le repository voulu:
 ```bash
-curl -L -o project-template.zip 
+curl -L -o project-template.zip https://github.com/EtienneP-26/project-template/archive/refs/heads/main.zip
 unzip project-template.zip
-chmod +x create-work-env.sh
+chmod +x project-template-main/create-work-env.sh 
 ```
  
 ## Utilisation
 ```bash
-./create-work-env.sh
+./project-template-main/create-work-env.sh
 ```
 Va créer les differents fichiers, ajouter permissions néccessaires et nettoyer ce qu'il n'y a plus besoin.
 

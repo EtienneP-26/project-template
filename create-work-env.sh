@@ -33,3 +33,5 @@ cp $PTF/files/.gitignore .gitignore
 cp $PTF/files/docker-compose.yml docker-compose.yml
 cp $PTF/files/README.md README.md
 cp $PTF/files/CONTRIBUTING.md CONTRIBUTING.md
+
+rm -r project-template.zip project-template-main
