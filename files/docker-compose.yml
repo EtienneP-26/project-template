@@ -7,3 +7,12 @@ services:
     stdin_open: true
     tty: true
     command: bash
+
+  lint:
+    image: ghcr.io/super-linter/super-linter:slim-v6
+    environment:
+      - RUN_LOCAL=true
+      - VALIDATE_ALL_CODEBASE=true
+      - DEFAULT_BRANCH=main
+    volumes:
+      - .:/tmp/lint
