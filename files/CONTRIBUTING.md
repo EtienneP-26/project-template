@@ -69,7 +69,11 @@ Règles :
 - `main` : toujours stable, jamais de commit direct dessus.
 
 ## 4. Pull Requests
-En ouvrir une a chaque Pull d'une branche.
+En ouvrir une a chaque push d'une branche sur la main.
+
+Le responsable de chaque module doit être mentionner sur les PR.
+
+Tout les tests de la CI doivent-être en vert pour pouvoir push sur une autre branche.
 
 ## 5. Avant de push
 Faire des tests.
