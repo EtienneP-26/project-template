@@ -41,7 +41,7 @@ jobs:
         if: hashFiles('Makefile', 'requirements.txt', 'pyproject.toml', 'package.json', 'Cargo.toml') == ''
         run: echo "Aucune stack détectée (pas encore de Makefile/requirements.txt/package.json/Cargo.toml). CI inactive en attendant du code."
 
-  EPITECH C Coding Style:
+  EPITECH-C-Coding-Style:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
             exit 1
           fi
 
-  Lint Coding Style:
+  Lint-Coding-Style:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
